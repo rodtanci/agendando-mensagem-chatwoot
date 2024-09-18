@@ -1,4 +1,4 @@
-# Automação de Mensagens no Chatwoot 🚀
+# Agendamento de Mensagens no Chatwoot 🚀
 
 Você já imaginou poder agendar mensagens para seus contatos ou grupos de WhatsApp direto pelo Chatwoot? Agora isso é possível graças à automação que criei utilizando Google Sheets, Google Forms e n8n! 🎯
 
