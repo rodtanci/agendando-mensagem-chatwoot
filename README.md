@@ -13,3 +13,17 @@ Você já imaginou poder agendar mensagens para seus contatos ou grupos de Whats
 - **Integração Fácil** 🔄: Todas essas ferramentas se conectam de maneira fluida com o Chatwoot, tornando o processo de integração simples e eficiente.
 
 Diga adeus ao envio manual de mensagens e dê boas-vindas a um fluxo de trabalho mais inteligente! 💡
+
+## 💡 Contribua com o Projeto
+
+Se você achou este projeto útil e deseja apoiar seu desenvolvimento contínuo, considere fazer uma contribuição via Pix. Sua ajuda é muito apreciada! 🙏
+
+**Chave Pix:** a0db6d5c-625b-4846-ba9a-3e06ccc6b1d4
+
+Além disso, confira o nosso canal no YouTube para mais tutoriais e atualizações sobre automações com n8n e outras ferramentas incríveis:
+
+[🔗 Canal do YouTube](https://www.youtube.com/@RodrigoTanci/)
+
+---
+
+Obrigado pelo seu apoio e por fazer parte da nossa comunidade! 💚
