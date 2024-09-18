@@ -1,0 +1,734 @@
+{
+  "name": "Disparo de mensagem agendada",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "dateTime": [
+            {
+              "value1": "={{ $json.horaISO }}",
+              "operation": "before",
+              "value2": "={{ $now }}"
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{ $('Google Sheets').item.json.Status }}",
+              "value2": "Aguardando"
+            }
+          ]
+        }
+      },
+      "id": "eed41ee4-4c11-41ce-9959-9ba7685fd420",
+      "name": "Horario",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "45bcf8f8-f526-4001-9149-e68c407f157a",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        760,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "f7bd83c9-ad68-4b7a-8949-bd14bfed20ca",
+      "name": "Replace Me",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Trata Mensagem e Envia",
+        "height": 377.42764068126246,
+        "width": 1578.146643962584,
+        "color": 3
+      },
+      "id": "5ecd30da-28a1-4647-b7ab-579269ea7eb1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        255.50833078066125
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Este exemplo gera um tempo de espera aleatório entre 10 e 60 segundos\nconst minWait = 3; // Tempo mínimo de espera em segundos\nconst maxWait = 6; // Tempo máximo de espera em segundos\nconst randomWaitTime = Math.floor(Math.random() * (maxWait - minWait + 1)) + minWait;\n\nreturn [\n  {\n    json: {\n      waitTime: randomWaitTime\n    }\n  }\n];\n"
+      },
+      "id": "f201386c-993d-4d0f-b606-98b86e222f4a",
+      "name": "Time Randon1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2140,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.waitTime }}"
+      },
+      "id": "ee378ade-b186-40ab-a8d1-b3e7d71ab41c",
+      "name": "Tempo de espera1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2320,
+        420
+      ],
+      "webhookId": "ad304cf1-3a60-40db-a50d-cc5800014a91"
+    },
+    {
+      "parameters": {
+        "content": "## Verificação do número",
+        "height": 227.41509964262278,
+        "width": 385.69321586944307,
+        "color": 4
+      },
+      "id": "4d5dc04a-a9e7-4d9a-87a8-f2561c7a6fbb",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Tempo entre as mensagens",
+        "height": 230.3746650610074,
+        "width": 404.53569195365,
+        "color": 4
+      },
+      "id": "40164da3-7bc2-44f0-872b-7697faf2d3c1",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        340
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Envia msg",
+        "height": 228.46386212541688,
+        "width": 313.99126283929667
+      },
+      "id": "d6a04884-63ab-4f7a-aa16-80aca5915360",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c2573aed-9acc-4fc6-a799-b11e2191d408",
+              "leftValue": "={{ $json.exists }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3060f72b-2969-4aec-96f8-a8d383c3904a",
+      "name": "If4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node['Info_Base'].json.evolution_url }}/chat/whatsappNumbers/{{ $node['Info_Base'].json.instance_name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $node['Info_Base'].json.global_api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"numbers\": [\n    \"{{ $json.telefone }}\"\n  ]\n} ",
+        "options": {}
+      },
+      "id": "5582a66b-b54a-427b-9e44-abb9cbc54769",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "=POST",
+        "url": "={{ $('Info_Base').item.json.evolution_url }}/message/sendText/{{ $('Info_Base').item.json.instance_name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $('Info_Base').item.json.global_api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"number\": \"{{ $('Dados da mensagem').item.json.telefone }}\",\n    \"text\": \"{{ $node['Dados da mensagem'].json.msg.replace(/\"/g, '\\\\\"').replace(/\\n/g, '\\\\n') }}\"\n}",
+        "options": {}
+      },
+      "id": "f0cc821c-6b80-4664-8323-a2d7c5dc4a47",
+      "name": "Envia msg",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2660,
+        420
+      ],
+      "retryOnFail": false,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "executeOnce": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "evolution_url",
+              "value": "url evo api"
+            },
+            {
+              "name": "global_api_key",
+              "value": "token evo api"
+            },
+            {
+              "name": "instance_name",
+              "value": "nome da instancia"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7528994a-cd82-48d6-b8c7-45450e7b83c0",
+      "name": "Info_Base",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        320,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "13535690-9446-4fb4-b5ff-3b723b872eab",
+              "name": "horaISO",
+              "value": "={{ DateTime.fromFormat($json[\"Enviar\"], \"dd/MM/yyyy - HH:mm:ss\").toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "0bb11069-50a2-4b19-98d8-8c69fdf421b5",
+              "name": "telefone",
+              "value": "={{ $json.Telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "c0218743-600d-433e-95d9-4580947a72e0",
+              "name": "msg",
+              "value": "={{ $json.Mensagem }}",
+              "type": "string"
+            },
+            {
+              "id": "09d398c4-c859-4bc7-87da-6a36e4274291",
+              "name": "ID",
+              "value": "={{ $json.ID }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b96dbe75-dd8d-4147-82d6-b561fee9ccdb",
+      "name": "Dados da mensagem",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1000,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0",
+          "mode": "list",
+          "cachedResultName": "Agendamentos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2045355658,
+          "mode": "list",
+          "cachedResultName": "Agendamentos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0/edit#gid=2045355658"
+        },
+        "options": {}
+      },
+      "id": "19938e67-121a-4f06-83b5-7285a4d725bb",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        500,
+        260
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ToZkn0nrNU9WvkgO",
+          "name": "Sheets (Suporte BOT)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0",
+          "mode": "list",
+          "cachedResultName": "Agendamentos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2045355658,
+          "mode": "list",
+          "cachedResultName": "Agendamentos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FgtvmOBscVoeqkwn7ipjmOJk9G4cJiRAlkNh2pAziI0/edit#gid=2045355658"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Enviado",
+            "ID": "={{ $('Dados da mensagem').item.json.ID }}",
+            "Criado/Editado": "={{ $now.toFormat('dd/MM/yyyy HH:mm:ss') }}\n"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mensagem",
+              "displayName": "Mensagem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hora",
+              "displayName": "Hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Enviar",
+              "displayName": "Enviar",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Criado/Editado",
+              "displayName": "Criado/Editado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f173eff1-3341-4322-bf3e-acd4920489f0",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        2940,
+        400
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ToZkn0nrNU9WvkgO",
+          "name": "Sheets (Suporte BOT)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "4cb8a355-9398-4e99-a01a-72e862f4c01f",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        140,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Busca mensagens",
+        "height": 256.25694231721775,
+        "width": 605.7763808054282
+      },
+      "id": "8e77316e-d5a8-4399-be21-b3fe7383eb41",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        60,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Verifica horarios",
+        "height": 452.0012337050814,
+        "width": 824.0024674101626,
+        "color": 5
+      },
+      "id": "602f7f90-2fc1-4ec4-99ac-f7b6f63a64d6",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Enviar mensagem agendada\n**Criado por Rodrigo Tanci**",
+        "height": 85.5510616360095,
+        "width": 383.97110874801103,
+        "color": 3
+      },
+      "id": "7375f4ae-5cd2-4427-924a-ffa0a47474b6",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Horario": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Dados da mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Time Randon1": {
+      "main": [
+        [
+          {
+            "node": "Tempo de espera1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tempo de espera1": {
+      "main": [
+        [
+          {
+            "node": "Envia msg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Time Randon1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia msg": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Info_Base": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados da mensagem": {
+      "main": [
+        [
+          {
+            "node": "Horario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Info_Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ee6dd6ff-a7dd-47f3-8e6f-21e5f701c812",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "33738330930e3881dd5571eca013f36ddf8aab20e4ea5c1f2ebaf4a2b4668ac6"
+  },
+  "id": "dVNNUsrug61ESoKE",
+  "tags": [
+    {
+      "createdAt": "2024-06-24T17:54:45.734Z",
+      "updatedAt": "2024-06-24T17:54:45.734Z",
+      "id": "W4QFAwjDhUwUJMhH",
+      "name": "Dev"
+    }
+  ]
+}
