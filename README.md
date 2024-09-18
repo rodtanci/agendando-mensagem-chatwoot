@@ -14,15 +14,15 @@ Você já imaginou poder agendar mensagens para seus contatos ou grupos de Whats
 
 Diga adeus ao envio manual de mensagens e dê boas-vindas a um fluxo de trabalho mais inteligente! 💡
 
-## 💡 Contribua com o Projeto
+## 💡 Contribua com os Projetos
 
-Se você achou este projeto útil e deseja apoiar seu desenvolvimento contínuo, considere fazer uma contribuição via Pix. Sua ajuda é muito apreciada! 🙏
+Se você achou este projeto útil e deseja apoiar seu desenvolvimento contínuo de novos projetos como esse, considere fazer uma contribuição via Pix. Sua ajuda é muito apreciada! 🙏
 
-**Chave Pix:** a0db6d5c-625b-4846-ba9a-3e06ccc6b1d4
+- [**Junte-se ao grupo no WhatsApp**](https://chat.whatsapp.com/H2as2v9yHre8U2gjNaCWRc) para tirar dúvidas e obter suporte.
+- [**Assista nossos tutoriais e novidades no YouTube**](https://www.youtube.com/@RodrigoTanci/) para ficar por dentro das atualizações.
+- **Apoie o projeto via Pix**: Chave Pix: `a0db6d5c-625b-4846-ba9a-3e06ccc6b1d4` 
 
-Além disso, confira o nosso canal no YouTube para mais tutoriais e atualizações sobre automações com n8n e outras ferramentas incríveis:
-
-[🔗 Canal do YouTube](https://www.youtube.com/@RodrigoTanci/)
+Facilite seu atendimento e melhore a eficiência do seu Chatwoot com essa automação inteligente!
 
 ---
 
